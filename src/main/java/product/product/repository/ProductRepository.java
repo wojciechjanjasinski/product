@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 public class ProductRepository {
     private List<Product> products;
 
-    public ProductRepository(){
+    public ProductRepository() {
         products = new ArrayList<>();
         products.add(new Product("masło", 4.49, new CategoryOfProduct("spożywcze")));
         products.add(new Product("mleko", 2.79, new CategoryOfProduct("spożywcze")));
@@ -24,13 +24,16 @@ public class ProductRepository {
         products.add(new Product("głośnik bluetooth", 299.99, new CategoryOfProduct("inne")));
         products.add(new Product("kąpielówki", 99.99, new CategoryOfProduct("inne")));
     }
-    public void addNewProduct(Product product){
+
+    public void addNewProduct(Product product) {
         products.add(product);
     }
-    public List<Product> showAll(){
+
+    public List<Product> showAll() {
         return new ArrayList<>(products);
     }
-    public double sumPricesOfAllProducts (){
+
+    public double sumPricesOfAllProducts() {
         double sum = 0.0;
         for (Product product : products) {
             double price = product.getPrice();
@@ -38,20 +41,20 @@ public class ProductRepository {
         }
         return sum;
     }
-    public String showAllProducts (){
+
+    public String showAllProducts() {
         List<Product> products = showAll();
         double sumPricesOfAllProducts = sumPricesOfAllProducts();
         return products + " łaczna cena wszystkich produktów wynosi: " + sumPricesOfAllProducts + " PLN";
     }
 
-    public static List<Product> showGroceryStreamOfProducts(List<Product> list)
-    {
+    public static List<Product> showGroceryStreamOfProducts(List<Product> list) {
         return list.stream()
                 .filter(product -> product.getCategoryOfProduct().getCategory().startsWith("spożywcze"))
                 .collect(Collectors.toList());
     }
-    public static double showGrocerySum(List<Product> list)
-    {
+
+    public static double showGrocerySum(List<Product> list) {
         List<Product> grocery = list.stream()
                 .filter(product -> product.getCategoryOfProduct().getCategory().startsWith("spożywcze"))
                 .collect(Collectors.toList());
@@ -62,14 +65,14 @@ public class ProductRepository {
         }
         return sum;
     }
-    public static List<Product> showHouseholdStreamOfProducts(List<Product> list)
-    {
+
+    public static List<Product> showHouseholdStreamOfProducts(List<Product> list) {
         return list.stream()
                 .filter(product -> product.getCategoryOfProduct().getCategory().startsWith("gospodarstwo domowe"))
                 .collect(Collectors.toList());
     }
-    public static double showHouseholdSum(List<Product> list)
-    {
+
+    public static double showHouseholdSum(List<Product> list) {
         List<Product> household = list.stream()
                 .filter(product -> product.getCategoryOfProduct().getCategory().startsWith("gospodarstwo domowe"))
                 .collect(Collectors.toList());
@@ -80,14 +83,14 @@ public class ProductRepository {
         }
         return sum;
     }
-    public static List<Product> showOtherStreamOFProducts(List<Product> list)
-    {
+
+    public static List<Product> showOtherStreamOFProducts(List<Product> list) {
         return list.stream()
                 .filter(product -> product.getCategoryOfProduct().getCategory().startsWith("inne"))
                 .collect(Collectors.toList());
     }
-    public static double showOtherSum(List<Product> list)
-    {
+
+    public static double showOtherSum(List<Product> list) {
         List<Product> other = list.stream()
                 .filter(product -> product.getCategoryOfProduct().getCategory().startsWith("inne"))
                 .collect(Collectors.toList());
@@ -98,29 +101,4 @@ public class ProductRepository {
         }
         return sum;
     }
-//    public ArrayList<Product> showGroceryProducts (){
-//        if (products.contains("spożywcze"))
-//        return new ArrayList<>(products);
-//    }
-//    public ArrayList<Product> showHouseholdProducts (){
-//        final String HOUSEHOLD = "gospodarstwo domowe";
-//        if (products.contains(HOUSEHOLD)){
-//            return new ArrayList<>();
-//        }
-//        return null;
-//    }
-//    public ArrayList<Product> showOtherProducts (){
-//        final String OTHER = "inne";
-//        if (products.contains(OTHER)){
-//            return new ArrayList<>();
-//        }
-//        return null;
-//    }
 }
-//        if (imie != null && imie.equals("")) {
-//            return "redirect:/error.html";
-//        } else {
-//            User user = new User(imie, lastName, age);
-//            userRepository.save(user);
-//            return "redirect:/success.html";
-//        }

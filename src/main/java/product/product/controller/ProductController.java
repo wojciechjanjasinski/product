@@ -20,22 +20,12 @@ public class ProductController {
         this.productRepository = productRepository;
     }
 
-//    @ResponseBody
-//    @GetMapping("/old")
-
-    //    @ResponseBody
-//    @GetMapping("/prices")
-    public double showSumOfPricesOfAllProducts() {
-        return productRepository.sumPricesOfAllProducts();
-    }
-
     @ResponseBody
     @GetMapping("/test")
     public Object showSpecifiedProductsTest(@RequestParam(name = "name", required = false) String name,
                                             @RequestParam(name = "price", required = false) Double price,
                                             @RequestParam(name = "category", required = false) String categoryOfAProduct) {
-//        productRepository.showAllProducts();
-//        productRepository.sumPricesOfAllProducts();
+
         List<Product> products = productRepository.showAll();
         if (categoryOfAProduct.startsWith("spożywcze"))
             return ProductRepository.showGroceryStreamOfProducts(products) + "" + ProductRepository.showGrocerySum(products);
@@ -46,25 +36,4 @@ public class ProductController {
         return products + " " + productRepository.sumPricesOfAllProducts();
     }
 
-//    @ResponseBody
-//    @GetMapping("/abc")
-//    public Stream<Object> getHousehold(@RequestParam(name = "name", required = false) String name,
-//                                       @RequestParam(name = "price", required = false) Double price,
-//                                       @RequestParam(name = "categoryOfProduct", required = false) String nazwaKategorii) {
-//        return productRepository.showAllAndSum()
-//          //      .filter(product -> product.getCategoryOfProduct().getCategory().startsWith("inne"))
-//           //     .collect(Collectors.toList());;
-//    }
-    //    @PostMapping("/add")
-//    public String add(@RequestParam(name = "firstName"/*, required = false, defaultValue = "Anonim"*/) String imie,
-//                      @RequestParam String lastName,
-//                      @RequestParam Integer age) {
-//        if (imie != null && imie.equals("")) {
-//            return "redirect:/error.html";
-//        } else {
-//            User user = new User(imie, lastName, age);
-//            userRepository.save(user);
-//            return "redirect:/success.html";
-//        }
-    //  }
 }
