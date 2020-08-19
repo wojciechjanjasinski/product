@@ -1,0 +1,1 @@
+Program with simple shop. My first program written in Spring MVC
