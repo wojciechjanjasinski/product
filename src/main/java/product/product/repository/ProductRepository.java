@@ -6,7 +6,7 @@ import product.product.model.Product;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
+import java.util.stream.Collectors;
 
 @Controller
 public class ProductRepository {
@@ -38,23 +38,65 @@ public class ProductRepository {
         }
         return sum;
     }
-    public Stream<Object> showAllAndSum (){
-        return Stream.of(products, sumPricesOfAllProducts());
+    public String showAllProducts (){
+        List<Product> products = showAll();
+        double sumPricesOfAllProducts = sumPricesOfAllProducts();
+        return products + " łaczna cena wszystkich produktów wynosi: " + sumPricesOfAllProducts + " PLN";
     }
-    public static Stream<Product> showGroceryStreamOfProducts(ArrayList<Product> list)
+
+    public static List<Product> showGroceryStreamOfProducts(List<Product> list)
     {
         return list.stream()
-                .filter(product -> product.getCategoryOfProduct().getCategory().startsWith("spożywcze"));
+                .filter(product -> product.getCategoryOfProduct().getCategory().startsWith("spożywcze"))
+                .collect(Collectors.toList());
     }
-    public static Stream<Product> showHouseholdStreamOfProducts(ArrayList<Product> list)
+    public static double showGrocerySum(List<Product> list)
+    {
+        List<Product> grocery = list.stream()
+                .filter(product -> product.getCategoryOfProduct().getCategory().startsWith("spożywcze"))
+                .collect(Collectors.toList());
+        double sum = 0.0;
+        for (Product product : grocery) {
+            double price = product.getPrice();
+            sum += price;
+        }
+        return sum;
+    }
+    public static List<Product> showHouseholdStreamOfProducts(List<Product> list)
     {
         return list.stream()
-                .filter(product -> product.getCategoryOfProduct().getCategory().startsWith("gospodarstwo domowe"));
+                .filter(product -> product.getCategoryOfProduct().getCategory().startsWith("gospodarstwo domowe"))
+                .collect(Collectors.toList());
     }
-    public static Stream<Product> showOtherStreamOFProducts(ArrayList<Product> list)
+    public static double showHouseholdSum(List<Product> list)
+    {
+        List<Product> household = list.stream()
+                .filter(product -> product.getCategoryOfProduct().getCategory().startsWith("gospodarstwo domowe"))
+                .collect(Collectors.toList());
+        double sum = 0.0;
+        for (Product product : household) {
+            double price = product.getPrice();
+            sum += price;
+        }
+        return sum;
+    }
+    public static List<Product> showOtherStreamOFProducts(List<Product> list)
     {
         return list.stream()
-                .filter(product -> product.getCategoryOfProduct().getCategory().startsWith("inne"));
+                .filter(product -> product.getCategoryOfProduct().getCategory().startsWith("inne"))
+                .collect(Collectors.toList());
+    }
+    public static double showOtherSum(List<Product> list)
+    {
+        List<Product> other = list.stream()
+                .filter(product -> product.getCategoryOfProduct().getCategory().startsWith("inne"))
+                .collect(Collectors.toList());
+        double sum = 0.0;
+        for (Product product : other) {
+            double price = product.getPrice();
+            sum += price;
+        }
+        return sum;
     }
 //    public ArrayList<Product> showGroceryProducts (){
 //        if (products.contains("spożywcze"))

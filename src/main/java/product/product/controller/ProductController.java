@@ -8,9 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import product.product.model.Product;
 import product.product.repository.ProductRepository;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 @Controller
 public class ProductController {
@@ -22,32 +20,30 @@ public class ProductController {
         this.productRepository = productRepository;
     }
 
-    @ResponseBody
-    @GetMapping("/product")
-    public String showAllProducts (){
-        List<Product> products = productRepository.showAll();
-        double sumPricesOfAllProducts = productRepository.sumPricesOfAllProducts();
-        return products + " łaczna cena wszystkich produktów wynosi: " + sumPricesOfAllProducts + " PLN";
-    }
-    @ResponseBody
-    @GetMapping("/prices")
-    public double showSumOfPricesOfAllProducts (){
+//    @ResponseBody
+//    @GetMapping("/old")
+
+    //    @ResponseBody
+//    @GetMapping("/prices")
+    public double showSumOfPricesOfAllProducts() {
         return productRepository.sumPricesOfAllProducts();
     }
 
     @ResponseBody
     @GetMapping("/test")
-    public Stream<Product> showSpecifiedProductsTest (@RequestParam(name = "name", required = false) String name,
-                                                      @RequestParam(name = "price", required = false) Double price,
-                                                      @RequestParam(name = "category", required = false) String categoryOfAProduct){
-        ArrayList<Product> products = new ArrayList<>();
+    public Object showSpecifiedProductsTest(@RequestParam(name = "name", required = false) String name,
+                                            @RequestParam(name = "price", required = false) Double price,
+                                            @RequestParam(name = "category", required = false) String categoryOfAProduct) {
+//        productRepository.showAllProducts();
+//        productRepository.sumPricesOfAllProducts();
+        List<Product> products = productRepository.showAll();
         if (categoryOfAProduct.startsWith("spożywcze"))
-            return ProductRepository.showGroceryStreamOfProducts(products);
+            return ProductRepository.showGroceryStreamOfProducts(products) + "" + ProductRepository.showGrocerySum(products);
         if (categoryOfAProduct.startsWith("gospodarstwo domowe"))
-            return ProductRepository.showHouseholdStreamOfProducts(products);
+            return ProductRepository.showHouseholdStreamOfProducts(products) + "" + ProductRepository.showHouseholdSum(products);
         if (categoryOfAProduct.startsWith("inne"))
-            return ProductRepository.showOtherStreamOFProducts(products);
-        return null;
+            return ProductRepository.showOtherStreamOFProducts(products) + "" + ProductRepository.showOtherSum(products);
+        return products + " " + productRepository.sumPricesOfAllProducts();
     }
 
 //    @ResponseBody
@@ -70,5 +66,5 @@ public class ProductController {
 //            userRepository.save(user);
 //            return "redirect:/success.html";
 //        }
- //  }
+    //  }
 }
