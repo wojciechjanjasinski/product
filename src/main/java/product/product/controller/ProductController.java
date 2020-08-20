@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import product.product.model.CategoryOfEnum;
 import product.product.model.Product;
 import product.product.repository.ProductRepository;
 
@@ -21,19 +22,16 @@ public class ProductController {
     }
 
     @ResponseBody
-    @GetMapping("/test")
-    public Object showSpecifiedProductsTest(@RequestParam(name = "name", required = false) String name,
-                                            @RequestParam(name = "price", required = false) Double price,
-                                            @RequestParam(name = "category", required = false) String categoryOfAProduct) {
-
+    @GetMapping("/products")
+    public List<Product> showProducts(Enum<CategoryOfEnum> categoryOfEnum) {
         List<Product> products = productRepository.showAll();
-        if (categoryOfAProduct.startsWith("spożywcze"))
-            return ProductRepository.showGroceryStreamOfProducts(products) + "" + ProductRepository.showGrocerySum(products);
-        if (categoryOfAProduct.startsWith("gospodarstwo domowe"))
-            return ProductRepository.showHouseholdStreamOfProducts(products) + "" + ProductRepository.showHouseholdSum(products);
-        if (categoryOfAProduct.startsWith("inne"))
-            return ProductRepository.showOtherStreamOFProducts(products) + "" + ProductRepository.showOtherSum(products);
-        return products + " " + productRepository.sumPricesOfAllProducts();
+        if (categoryOfEnum.equals(CategoryOfEnum.GROCERY))
+            return productRepository.showGroceryStreamOfProducts();
+        if (categoryOfEnum.equals(CategoryOfEnum.HOUSEHOLD))
+            return productRepository.showHouseholdStreamOfProducts();
+        if (categoryOfEnum.equals(CategoryOfEnum.OTHER))
+            return productRepository.showOtherStreamOFProducts();
+        return products;
     }
 
 }

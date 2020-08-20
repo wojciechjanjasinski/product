@@ -3,12 +3,12 @@ package product.product.model;
 public class Product {
     private String name;
     private double price;
-    private CategoryOfProduct categoryOfProduct;
+    private CategoryOfEnum categoryOfEnum;
 
-    public Product(String name, double price, CategoryOfProduct categoryOfProduct) {
+    public Product(String name, double price, CategoryOfEnum categoryOfEnum) {
         this.name = name;
         this.price = price;
-        this.categoryOfProduct = categoryOfProduct;
+        this.categoryOfEnum = categoryOfEnum;
     }
 
     public String getName() {
@@ -19,8 +19,8 @@ public class Product {
         return price;
     }
 
-    public CategoryOfProduct getCategoryOfProduct() {
-        return categoryOfProduct;
+    public CategoryOfEnum getCategoryOfEnum() {
+        return categoryOfEnum;
     }
 
     @Override
@@ -28,7 +28,7 @@ public class Product {
         return "Product{" +
                 "name='" + name + '\'' +
                 ", price=" + price +
-                ", categoryOfProduct=" + categoryOfProduct +
+                ", categoryOfProduct=" + categoryOfEnum +
                 '}';
     }
 }
